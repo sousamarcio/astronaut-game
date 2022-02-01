@@ -5,6 +5,7 @@ canvas.width = innerWidth
 canvas.height = innerHeight
 
 const gravity = 1.5
+
 class Player {
     constructor() {
         this.position = {
@@ -26,8 +27,10 @@ class Player {
 
     update() {
         this.draw()
+        this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
+        //Faz a gravidade
         if (this.position.y + this.height + this.velocity.y <= canvas.height)
             this.velocity.y += gravity
         else this.velocity.y = 0
@@ -35,11 +38,76 @@ class Player {
 }
 
 const player = new Player()
+const keys = {
+    right: {
+        pressed: false
+    },
+    left: {
+        pressed: false
+    }
+}
 
 function animate() {
     requestAnimationFrame(animate)
     c.clearRect(0, 0, canvas.width, canvas.height)
     player.update()
+
+    // Define a velocidade para trás e para frente
+    if (keys.right.pressed) {
+        player.velocity.x = 5
+    } else if (keys.left.pressed) {
+        player.velocity.x = -5
+    } else player.velocity.x = 0
 }
 
 animate()
+
+// Evento de quando a tecla é pressionada para movimentação do player
+window.addEventListener('keydown', ({ keyCode }) => {
+    switch (keyCode) {
+        case 65:
+            console.log('left')
+            keys.left.pressed = true
+            break
+
+        case 83:
+            console.log('down')
+            break
+
+        case 68:
+            console.log('right')
+            keys.right.pressed = true
+            break
+
+        case 87:
+            console.log('up')
+            player.velocity.y -= 20
+            break
+    }
+})
+
+// Evento de quando a tecla é solta na movimentação do player
+window.addEventListener('keyup', ({ keyCode }) => {
+    switch (keyCode) {
+        case 65:
+            console.log('left')
+            keys.left.pressed = false
+            break
+
+        case 83:
+            console.log('down')
+            break
+
+        case 68:
+            console.log('right')
+            keys.right.pressed = false
+            break
+
+        case 87:
+            console.log('up')
+            player.velocity.y -= 20
+            break
+    }
+
+    console.log(keys.right.pressed)
+})
