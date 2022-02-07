@@ -168,6 +168,24 @@ function init() {
             image: platformSmallTallImage
         }),
         new Platform({
+            x: platformImage.width * 10 + 620 - 2 + platformImage.
+                width - platformSmallTallImage.width,
+            y: 270,
+            image: platformSmallTallImage
+        }),
+        new Platform({
+            x: platformImage.width * 11 + 620 - 2 + platformImage.
+                width - platformSmallTallImage.width,
+            y: 170,
+            image: platformSmallTallImage
+        }),
+        new Platform({
+            x: platformImage.width * 12 + 720 - 2 + platformImage.
+                width - platformSmallTallImage.width,
+            y: 170,
+            image: platformSmallTallImage
+        }),
+        new Platform({
             x: -1,
             y: 470,
             image: platformImage
@@ -193,6 +211,41 @@ function init() {
         }),
         new Platform({
             x: platformImage.width * 5 + 700 - 2,
+            y: 470,
+            image: platformImage
+        }),
+        new Platform({
+            x: platformImage.width * 6 + 700 - 3,
+            y: 470,
+            image: platformImage
+        }),
+        new Platform({
+            x: platformImage.width * 7 + 1000 - 3,
+            y: 470,
+            image: platformSmallTallImage
+        }),
+        new Platform({
+            x: platformImage.width * 8 + 1100 - 3,
+            y: 470,
+            image: platformSmallTallImage
+        }),
+        new Platform({
+            x: platformImage.width * 9 + 1200 - 3,
+            y: 470,
+            image: platformImage
+        }),
+        new Platform({
+            x: platformImage.width * 12 + 1750,
+            y: 470,
+            image: platformImage
+        }),
+        new Platform({
+            x: platformImage.width * 13 + 1750 - 3,
+            y: 470,
+            image: platformImage
+        }),
+        new Platform({
+            x: platformImage.width * 14 + 1750 - 4,
             y: 470,
             image: platformImage
         })
