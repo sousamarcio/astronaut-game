@@ -8,6 +8,7 @@ const gravity = 1.5
 
 class Player {
     constructor() {
+        this.speed = 10
         this.position = {
             x: 100,
             y: 100
@@ -81,39 +82,14 @@ function createImage(imageSrc) {
 const platformSrc = './img/platform.png'
 const backgroundSrc = './img/background.png'
 const hillsSrc = './img/hills.png'
+const platformSmallTall = './img/platformSmallTall.png'
 
 let platformImage = createImage(platformSrc)
+let platformSmallTallImage = createImage(platformSmallTall)
 
 let player = new Player()
-let platforms = [
-    new Platform({
-        x: -1,
-        y: 470,
-        image: platformImage
-    }), new Platform({
-        x: platformImage.width - 3,
-        y: 470,
-        image: platformImage
-    }),
-    new Platform({
-        x: platformImage.width * 2 + 100,
-        y: 470,
-        image: platformImage
-    })
-]
-
-let genericObjects = [
-    new GenericObject({
-        x: -1,
-        y: -1,
-        image: createImage(backgroundSrc)
-    }),
-    new GenericObject({
-        x: -1,
-        y: -1,
-        image: createImage(hillsSrc)
-    })
-]
+let platforms = []
+let genericObjects = []
 
 const keys = {
     right: {
@@ -133,6 +109,12 @@ function init() {
     player = new Player()
     platforms = [
         new Platform({
+            x: platformImage.width * 4 + 300 - 2 + platformImage.
+                width - platformSmallTallImage.width,
+            y: 270,
+            image: platformSmallTallImage
+        }),
+        new Platform({
             x: -1,
             y: 470,
             image: platformImage
@@ -143,6 +125,21 @@ function init() {
         }),
         new Platform({
             x: platformImage.width * 2 + 100,
+            y: 470,
+            image: platformImage
+        }),
+        new Platform({
+            x: platformImage.width * 3 + 300,
+            y: 470,
+            image: platformImage
+        }),
+        new Platform({
+            x: platformImage.width * 4 + 300 - 2,
+            y: 470,
+            image: platformImage
+        }),
+        new Platform({
+            x: platformImage.width * 5 + 700 - 2,
             y: 470,
             image: platformImage
         })
@@ -184,28 +181,28 @@ function animate() {
 
     // Define a velocidade do player para trás e para frente quando pressionado
     if (keys.right.pressed && player.position.x < 400) {
-        player.velocity.x = 5
+        player.velocity.x = player.speed
     } else if (keys.left.pressed && player.position.x > 100) {
-        player.velocity.x = -5
+        player.velocity.x = - player.speed
     } else {
         player.velocity.x = 0
 
         // Cria a movimentação da plataforma
         if (keys.right.pressed) {
-            scrollOffset += 5
+            scrollOffset += player.speed
             platforms.forEach(platform => {
-                platform.position.x -= 5
+                platform.position.x -= player.speed
             })
             genericObjects.forEach(genericObject => {
-                genericObject.position.x -= 3
+                genericObject.position.x -= player.speed * .66
             })
         } else if (keys.left.pressed) {
-            scrollOffset -= 5
+            scrollOffset -= player.speed
             platforms.forEach(platform => {
-                platform.position.x += 5
+                platform.position.x += player.speed
             })
             genericObjects.forEach(genericObject => {
-                genericObject.position.x += 3
+                genericObject.position.x += player.speed * .66
             })
         }
     }
@@ -222,7 +219,7 @@ function animate() {
     })
 
     // Condição de vitória
-    if (scrollOffset > 2000) {
+    if (scrollOffset > platformImage.width * 5 + 300 - 2) {
         console.log('You win')
     }
 
@@ -232,10 +229,11 @@ function animate() {
     }
 }
 
+init()
 animate()
 
 // Evento de quando a tecla é pressionada para movimentação do player
-window.addEventListener('keydown', ({ keyCode }) => {
+addEventListener('keydown', ({ keyCode }) => {
     switch (keyCode) {
         case 65:
             console.log('left')
@@ -253,13 +251,13 @@ window.addEventListener('keydown', ({ keyCode }) => {
 
         case 87:
             console.log('up')
-            player.velocity.y -= 20
+            player.velocity.y -= 25
             break
     }
 })
 
 // Evento de quando a tecla é solta na movimentação do player
-window.addEventListener('keyup', ({ keyCode }) => {
+addEventListener('keyup', ({ keyCode }) => {
     switch (keyCode) {
         case 65:
             console.log('left')
@@ -277,7 +275,6 @@ window.addEventListener('keyup', ({ keyCode }) => {
 
         case 87:
             console.log('up')
-            player.velocity.y -= 20
             break
     }
 })
